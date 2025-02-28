@@ -1,0 +1,35 @@
+<html>
+<head>
+    <title>Campaign Report</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+<body class="container mt-5">
+    <h2 class="mb-4">Campaign Performance Report</h2>
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Metric</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for key, value in report.items() %}
+        <tr>
+            <td>{{ key }}</td>
+            <td>
+                {% if "%" in (value|string) %}
+                    {{ value }}
+                {% elif "Budget" in key or "Sales" in key %}
+                    ₹{{ "{:,}".format(value|float) }}
+                {% else %}
+                    {{ "{:,}".format(value|int) }}
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <a href="/download" class="btn btn-success">Download Processed File</a>
+</body>
+</html>
